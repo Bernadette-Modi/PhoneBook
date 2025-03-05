@@ -28,6 +28,15 @@ def view_contact():
             print(f"{full_name}: {phone}")
         print("-----------------------")
 
+def search_contact():
+    search = input("Enter the name to search: ").strip().title()
+    for full_name, phone in contacts.item():
+        if search in name:
+            print(f"{full_name}: {phone}")
+            return
+    print("Contact not found.")
+        
+
     
 
 
