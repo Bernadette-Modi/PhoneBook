@@ -20,6 +20,14 @@ def add_contact():
     print(f"Contact {full_name} added sucessfully.")
 
 def view_contact():
+    if not contact:
+        print("Contact does not exist.")
+    else: 
+        print("\n --- CONTACT LIST ---")
+        for name, phone in contacts.items():
+            print(f"{full_name}: {phone}")
+        print("-----------------------")
+
     
 
 
