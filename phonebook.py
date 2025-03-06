@@ -52,15 +52,26 @@ def delete_contact():
         print(f"Contact {name} deleted successfully.")
     else: 
         print("Contact not found.")
-        
-        
 
         
+while True:
+    display_menu()
+    choice = input("Choose an option (1-6)")
+
+    if choice == "1":
+        add_contact()
+    elif choice == "2":
+        view_contact()
+    elif choice == "3":
+        search_contact()
+    elif choice == "4":
+        update_contact()
+    elif choice == "5":
+        delete_contact()
+    elif choice == "6":
+        print("Exiting Phone Book. Goodbye!")
+        break
+    else:
+        print("Invalid choice. Please enter a number from 1-6.")
 
     
-
-
-while True:
-    record = input("Name: ")
-    num = input("Number: ")
-    print(record, num)
