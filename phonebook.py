@@ -24,26 +24,41 @@ def view_contact():
         print("Contact does not exist.")
     else: 
         print("\n --- CONTACT LIST ---")
-        for name, phone in contacts.items():
+        for name, phone in sorted(contacts.items()):
             print(f"{name}: {phone}")
         print("-----------------------")
 
 def search_contact():
     search = input("Enter the name to search: ").strip().title()
     for full_name, phone in contacts.items():
-        if search in name:
+        if search in full_name:
             print(f"{full_name}: {phone}")
             return
     print("Contact not found.")
 
 def update_contact():
-    name = input("Enter the name to update: ").strip().title()
-    if name in contacts:
-        new_number = input("Enter new phone number: ").strip()
-        contacts[name] = new_number
-        print(f"Contact {name} updated successfully.")
-    else:
+    search = input("Enter the name to update: ").strip().title()
+    matches = [name for name in contacts if search in name]
+
+    if not matches:
         print("Contact not found.")
+        return
+
+    if len(matches) > 1:
+        print("\nMultiple contacts found: ")
+        for i, match in enumerate(matches, 1):
+            print(f"{i}. {match}: {contacts[match]}")
+        choice = input("Select the number of the contact to update: ").strip()
+        if not choice.isdigit() or int(choice) not in range(1, len(matches) + 1):
+            print("Invalid Selection.")
+            return
+        selected_contact = matches[int(choice) - 1]
+    else:
+        selected_contact = matches[0]
+    
+    new_number = input(f"ENter new phone number for {selected_contact}: ").strip()
+    contacts[selected_contact] = new_number
+    print(f"Contact {selected_contact} updated successfully.")
 
 def delete_contact():
     name = input("Enter the contact to delete: ").strip().title()
@@ -56,7 +71,7 @@ def delete_contact():
         
 while True:
     display_menu()
-    choice = input("Choose an option (1-6)")
+    choice = input("Choose an option (1-6): ")
 
     if choice == "1":
         add_contact()
