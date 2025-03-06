@@ -61,12 +61,31 @@ def update_contact():
     print(f"Contact {selected_contact} updated successfully.")
 
 def delete_contact():
-    name = input("Enter the contact to delete: ").strip().title()
-    if name in contacts:
-        del contacts[name]
-        print(f"Contact {name} deleted successfully.")
-    else: 
+    search = input("Enter the contact to delete: ").strip().title()
+    matches = [name for name in contacts if search in name]
+
+    if not matches:
         print("Contact not found.")
+        return
+
+    if len(matches) > 1:
+        print("\nMultiple contacts found: ")
+        for i, match in enumerate(matches, 1):
+            print(f"{i}. {match}: {contacts[match]}")
+        choice = input("Select the number of the contact to delete: ").strip()
+        if not choice.isdigit() or int(choice) not in range(1, len(matches) + 1):
+            print("Invalid Selection.")
+        selected_contact = matches[int(choice) - 1]
+    else:
+        selected_contact = matche[0]
+
+    confirm = input(f"Are you sure you want to delete {selected_contact}? (yes/no): ").strip().lower()
+    if confirm == "yes":
+        del contacts[selected_contact]
+        print(f"Contact {selected_contact} deleted successfully.")
+    else:
+        print("Deletion Canceled.")
+
 
         
 while True:
