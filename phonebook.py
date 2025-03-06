@@ -40,6 +40,12 @@ def update_contact():
     name = input("Enter the name to update: ").strip().title()
     if name in contacts:
         new_number = input("Enter new phone number: ").strip()
+        contacts[name] = new_number
+        print(f"Contact {name} updated successfully.")
+    else:
+        print("Contact not found.")
+
+
         
 
         
