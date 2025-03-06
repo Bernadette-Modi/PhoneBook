@@ -4,15 +4,15 @@ def load_contact():
     try:
         with open(CONTACTS_FILE, "r") as file:
             return json.load(file)
-    except (FileNotFoundError, json.JSONDecodError):
+    except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
 def save_contacts():
-    with open(CONTACTS_FILE, "W") as file:
+    with open(CONTACTS_FILE, "w") as file:
         json.dump(contacts, file, indent=4)
 
 
-contacts = load_contacts()
+contacts = load_contact()
 
 def display_menu(): 
     print("Welcome to the Phone Book system.")
@@ -37,11 +37,11 @@ def add_contact():
 
 def view_contact():
     if not contacts:
-        print("Contact does not exist.")
+        print("Contact is empty.")
     else: 
         print("\n --- CONTACT LIST ---")
         for name in sorted(contacts):
-            print(f"{name}: {phone}")
+            print(f"{name}: {contacts[name]}")
         print("-----------------------")
 
 def search_contact():
