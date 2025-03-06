@@ -45,7 +45,14 @@ def update_contact():
     else:
         print("Contact not found.")
 
-
+def delete_contact():
+    name = input("Enter the contact to delete: ").strip().title()
+    if name in contacts:
+        del contacts[name]
+        print(f"Contact {name} deleted successfully.")
+    else: 
+        print("Contact not found.")
+        
         
 
         
