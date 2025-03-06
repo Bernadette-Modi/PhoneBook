@@ -1,4 +1,19 @@
-contacts = {}
+import json
+CONTACTS_FILE = "contact.json"
+def load_contact():
+    try:
+        with open(CONTACTS_FILE, "r") as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodError):
+        return {}
+
+def save_contacts():
+    with open(CONTACTS_FILE, "W") as file:
+        json.dump(contacts, file, indent=4)
+
+
+contacts = load_contacts()
+
 def display_menu(): 
     print("Welcome to the Phone Book system.")
     print("1. Add Contact")
@@ -17,6 +32,7 @@ def add_contact():
         return
     phone = input("Phone Number: ")
     contacts[full_name] = phone
+    save_contacts()
     print(f"Contact {full_name} added sucessfully.")
 
 def view_contact():
@@ -24,7 +40,7 @@ def view_contact():
         print("Contact does not exist.")
     else: 
         print("\n --- CONTACT LIST ---")
-        for name, phone in sorted(contacts.items()):
+        for name in sorted(contacts):
             print(f"{name}: {phone}")
         print("-----------------------")
 
@@ -56,8 +72,9 @@ def update_contact():
     else:
         selected_contact = matches[0]
     
-    new_number = input(f"ENter new phone number for {selected_contact}: ").strip()
+    new_number = input(f"Enter new phone number for {selected_contact}: ").strip()
     contacts[selected_contact] = new_number
+    save_contacts()
     print(f"Contact {selected_contact} updated successfully.")
 
 def delete_contact():
@@ -77,11 +94,12 @@ def delete_contact():
             print("Invalid Selection.")
         selected_contact = matches[int(choice) - 1]
     else:
-        selected_contact = matche[0]
+        selected_contact = matches[0]
 
     confirm = input(f"Are you sure you want to delete {selected_contact}? (yes/no): ").strip().lower()
     if confirm == "yes":
         del contacts[selected_contact]
+        save_contacts()
         print(f"Contact {selected_contact} deleted successfully.")
     else:
         print("Deletion Canceled.")
